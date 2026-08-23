@@ -1,4 +1,15 @@
-# 掌心窗公开版 v0.3.6.6
+# 掌心窗公开版 v0.3.7
+
+## v0.3.7 日记与守护日历更新
+
+- 守护日历事件补充稳定 ID，支持在日期详情卡中编辑、确认删除，并兼容没有 ID 的旧数据。
+- MCP 完善 `list_guardian_days`、`add_guardian_day`、`update_guardian_day`、`delete_guardian_day`。
+- 陪伴页新增本机保存的“TA 的日记”：纸质封面与纸页、左侧日期抽屉、关键词/日期搜索、封面修改和导入导出备份。
+- 日记正文默认仅显示四行摘要；点击对应纸页展开全文，再次点击即可收起，切换纸页时会自动折叠上一篇。
+- 日记封面增加书脊、纸页厚度、书签和立体阴影，书名信息直接居中落在封面上并按屏幕高度调整视觉位置；日记与守护日历二级页改用精简顶部，日历主体适当下移。
+- 日记正文纸张改为浅粉米白渐变，使用淡灰紫横线、粉色页边线和低对比纸纤维，心情以柔和印章显示。
+- “更多”菜单支持手动添加日记；MCP 支持创建、读取、搜索、更新和删除日记本及日记。
+- 固定公开版签名保持不变，可继续覆盖安装旧版本。
 
 ## v0.3.6.6 稳定性修复
 
@@ -31,7 +42,7 @@
 ## 本版内容
 
 - **今日页**：今日窗语、今日专注、天气、下一件事、手机电量、今日轨迹。
-- **陪伴页**：陪伴对象卡片、最近一句话、陪伴天数、下个纪念日、行动记录、归电入口。
+- **陪伴页**：陪伴对象卡片、最近一句话、陪伴天数、下个纪念日、行动记录、归电入口，以及本机保存的“TA 的日记”。
 - **守护页**：守护日历、目标 App 设置、应用门禁、屏幕休息、提醒、天气、息屏。
 - **设置页**：服务器连接、Token、设备 ID、用户名称、陪伴对象名称、目标 App、权限、主动提醒、周期、主题、调试、版本更新、许可。
 - **MCP**：截图、读屏、点击、输入、通知、天气、日历、归电、门禁、屏幕休息、提醒、到访记录、关心策略等通用工具。
@@ -65,15 +76,15 @@ update.json   版本更新信息
 
 1. 将源码包解压并覆盖到公开仓库根目录，确保 `.github`、`android`、`server`、`mcp` 位于根目录。
 2. 打开 GitHub 仓库 → **Actions** → **Build Android Public APK** → **Run workflow**。
-3. 构建成功后下载 `zhangxinchuang-public-v0.3.6.6-apk` artifact。
+3. 构建成功后下载 `zhangxinchuang-public-v0.3.7-apk` artifact。
 
 构建产物为：
 
 ```text
-android/Zhangxinchuang-public-v0.3.6.6.apk
+android/Zhangxinchuang-public-v0.3.7.apk
 ```
 
-版本名 `0.3.6.6`，版本码 `30606`。
+版本名 `0.3.7`，版本码 `30700`。
 
 ### 固定签名
 
@@ -351,7 +362,8 @@ MCP 详细工具说明见 [docs/mcp.md](docs/mcp.md)。常用工具分组如下�
 - **点击与输入**：`tap_text`、`input_text`、`send_phone_command`、`run_sequence`、`run_preset`。
 - **App 控制**：`open_app`、`phone_home`、`phone_back`、`phone_recents`、`phone_screen_off`、`list_known_apps`、`save_known_app`。
 - **通知与提醒**：`send_notification`、`set_alarm`、`get_weather_state`、`send_weather_notification`。
-- **日历与窗语**：`get_window_whisper`、`set_window_whisper`、`get_guardian_calendar`、`add_guardian_calendar_event`。
+- **日历与窗语**：`get_window_whisper`、`set_window_whisper`、`list_guardian_days`、`add_guardian_day`、`update_guardian_day`、`delete_guardian_day`。
+- **TA 的日记**：创建/重命名日记本，写入、读取、搜索、更新和删除本机日记；正文不默认上传云端。
 - **归电与关心**：`get_guidian_state`、`set_guidian_config`、`trigger_guidian`、`mark_guidian_returned`、`active_care_check`、`care_action`。
 - **门禁/屏幕休息**：`screen_break_app`、`temporary_screen_break_release`、`end_screen_break`、`extend_screen_break`、`get_screen_break_state`、`list_screen_break_apps`、`add_screen_break_app`、`set_screen_break_passphrase`。
 - **到访与活动**：`record_visit`、`get_last_visit`、`get_visit_history`、`get_visit_stats`、`get_activity_events`、`add_activity_event`、`get_companion_actions`。

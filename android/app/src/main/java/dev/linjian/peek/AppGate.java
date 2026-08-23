@@ -346,18 +346,15 @@ public class AppGate {
                 home.setOnClickListener(v -> { ScreenshotService svc = ScreenshotService.getInstance(); if (svc != null) svc.doHome(); removeOverlay(); });
                 row.addView(home, new LinearLayout.LayoutParams(0, -1, 1f));
 
-                Button request = overlayButton(app, "申请解锁", false);
-                LinearLayout.LayoutParams reqLp = new LinearLayout.LayoutParams(0, -1, 1f);
-                reqLp.leftMargin = dp(ctx, 8);
-                request.setOnClickListener(v -> { submitUnlockRequest(app, pkg, "想临时解锁"); Toast.makeText(app, "已提交解锁申请", Toast.LENGTH_SHORT).show(); });
-                row.addView(request, reqLp);
+                Button detail = overlayButton(app, "查看详情", false);
+                LinearLayout.LayoutParams detailLp = new LinearLayout.LayoutParams(0, -1, 1f);
+                detailLp.leftMargin = dp(ctx, 8);
+                detail.setOnClickListener(v -> {
+                    removeOverlay();
+                    showLockActivity(app, pkg);
+                });
+                row.addView(detail, detailLp);
                 root.addView(row, rowLp);
-
-                Button hide = overlayButton(app, "暂时收起", false);
-                LinearLayout.LayoutParams hideLp = new LinearLayout.LayoutParams(-1, dp(ctx, 34));
-                hideLp.topMargin = dp(ctx, 8);
-                hide.setOnClickListener(v -> removeOverlay());
-                root.addView(hide, hideLp);
 
                 int type = Build.VERSION.SDK_INT >= 26 ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY : WindowManager.LayoutParams.TYPE_PHONE;
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
