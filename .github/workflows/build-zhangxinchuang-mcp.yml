@@ -1,0 +1,54 @@
+name: Build Zhangxinchuang MCP image
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/build-zhangxinchuang-mcp.yml
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-mcp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out official v0.3.9.0 source
+        uses: actions/checkout@v4
+        with:
+          repository: linzhi-524/linjian-peek-public
+          ref: 0c97cdf0976eedacb1e3e2b77abad76cebf44bda
+          path: source
+          persist-credentials: false
+
+      - name: Prepare MCP Dockerfile
+        run: |
+          cat > source/mcp/Dockerfile <<'EOF'
+          FROM node:22-alpine
+          WORKDIR /app
+          COPY package.json ./
+          RUN npm install --omit=dev --no-audit --no-fund
+          COPY . .
+          ENV PORT=8787
+          EXPOSE 8787
+          CMD ["npm", "start"]
+          EOF
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and publish MCP image
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        with:
+          context: ./source/mcp
+          file: ./source/mcp/Dockerfile
+          push: true
+          tags: ghcr.io/yingd6847-max/zhangxinchuang-mcp:0.3.9.0
+          labels: |
+            org.opencontainers.image.source=https://github.com/yingd6847-max/linjian-peek-public
+            org.opencontainers.image.revision=0c97cdf0976eedacb1e3e2b77abad76cebf44bda
